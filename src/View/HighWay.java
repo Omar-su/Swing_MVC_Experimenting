@@ -3,6 +3,9 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A class representing the road on which the vehicle is driving on
+ */
 public class HighWay extends JPanel {
 
     public HighWay(){

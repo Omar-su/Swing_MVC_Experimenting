@@ -3,6 +3,9 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A class representing a panel that shows the current score
+ */
 public class ScoreLabel extends JPanel {
 
     public ScoreLabel(){
@@ -16,6 +19,11 @@ public class ScoreLabel extends JPanel {
 
     }
 
+    /**
+     * Updates the score label
+     * @param score the current score
+     * @param label The label that needs updating
+     */
     private void updateLabel(int score, JLabel label){
         label.setText("SCORE : " + score);
     }
