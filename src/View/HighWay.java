@@ -1,48 +1,58 @@
 package View;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 /**
  * A class representing the road on which the vehicle is driving on
  */
-public class HighWay extends JPanel {
+public class HighWay extends JPanel implements ActionListener {
 
-    Random random;
-    int[] obsX;
-    int obsY;
+    private final int obsHeight = 50;
+    private Random random;
+    private Timer timer;
 
-    // number of obstacles
-    int numObs;
-    boolean stillALive;
+    // obstacles variables
+    private int obs1Width;
+    private int obs2Width;
+    private int[] obsX;
+    private int obsY;
+    private final int obstacleSpeed = 4;
+
+    // panel variables
+    private final int gapWidth = 100;
+    private final int panelWidth = 600;
+    private final int panelHeight = 800;
+    private boolean stillALive;
+    private final int numObs = 2;
+    private Color obsColor;
+
 
     public HighWay(){
-        setPreferredSize(new Dimension(500,800));
         setBackground(Color.GRAY);
         setLayout(new GridLayout());
-        setBounds(100,0, 600,800);
+        setBounds(100,0, panelWidth,panelHeight);
         random = new Random();
         stillALive = true;
-        newObstacles();
-
+        newObstacle();
+        timer = new Timer(10, this);
+        timer.start();
 
     }
 
     /**
      * Gets values needed for new obstacles
      */
-    private void newObstacles(){
+    private void newObstacle(){
         obsY = 0;
-        numObs = random.nextInt(3,7);
         obsX = new int[numObs];
-        for (int i = 0; i < numObs ; i++){
-            obsX[i] = random.nextInt(500);
-        }
+        obsColor = getRandomColor();
+        obsX[0] = 0;
+        obsX[1] = 600;
+        obs1Width = random.nextInt(560);
     }
 
     @Override
@@ -52,21 +62,40 @@ public class HighWay extends JPanel {
     }
 
     /**
-     * Draws obstacles
-     * @param g
+     * Draws the obstacle
      */
     private void draw(Graphics g){
         if (stillALive){
-            for (int x : obsX) {
-                g.setColor(Color.BLUE);
-                g.fillRoundRect(x, obsY, 140, 50, 20, 20);
-                System.out.println("x value : " + x + " y Value : " + obsY);
-                System.out.println(numObs);
-            }
-
+            g.setColor(obsColor);
+            // obstacle 1
+            g.fillRoundRect(obsX[0], obsY, obs1Width, 50, 20, 20);
+            // obstacle 2
+            obs2Width = (panelWidth- obs1Width -gapWidth);
+            g.fillRoundRect((obsX[1]-obs2Width), obsY, obs2Width, obsHeight,20, 20);
         }
     }
 
+    /**
+     * Generates a random color
+     * @return a random color
+     */
+    private Color getRandomColor() {
+        float hue = random.nextFloat();
+        int rgb = Color.HSBtoRGB(hue,(float) 1,(float) 0.7);
+        return new Color(rgb);
+    }
 
 
+    /**
+     * Moves obstacle when timer calls on it
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (obsY + obsHeight >= panelHeight){
+            newObstacle();
+        }
+        obsY += obstacleSpeed;
+        repaint();
+    }
 }

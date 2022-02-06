@@ -7,12 +7,16 @@ import java.awt.*;
  * A class representing a panel that has buttons for moving the vehicle
  */
 public class MovePanel extends JPanel {
+
+    private final int height = 100;
+    private final int width = 250;
+    private final int y = 670;
+    private final int x = 280;
+
     public MovePanel(){
         setPreferredSize(new Dimension(300,100));
         setLayout(new GridBagLayout());
-        setBounds(280,670,250,100);
-
-
+        setBounds(x, y, width, height);
 
         JButton[] buttons = createButtons();
         for (JButton button : buttons){
