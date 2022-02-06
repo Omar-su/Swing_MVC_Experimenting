@@ -8,9 +8,9 @@ import java.awt.*;
  */
 public class MovePanel extends JPanel {
     public MovePanel(){
-        this.setPreferredSize(new Dimension(300,100));
-        this.setLayout(new GridBagLayout());
-        this.setBounds(280,670,250,100);
+        setPreferredSize(new Dimension(300,100));
+        setLayout(new GridBagLayout());
+        setBounds(280,670,250,100);
 
 
 
@@ -19,9 +19,9 @@ public class MovePanel extends JPanel {
             button.setLayout(new BorderLayout(50,50));
 
 
-            this.add(button);
+            add(button);
         }
-        this.setOpaque(false);
+        setOpaque(false);
 
     }
 
